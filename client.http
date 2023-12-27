@@ -1,0 +1,125 @@
+###  Homepage
+
+GET http://localhost:3000/home
+
+### Display VMS design
+
+GET http://localhost:3000/vms-plan
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzYiLCJ1c2VybmFtZSI6InN1cHJlbWVub2JsZSIsInBhc3N3b3JkIjoiYWJjMTIzIiwibmFtZSI6IlN5ZWQgQWhtYWQiLCJlbWFpbCI6ImJvYkBndWxhZ3VsYS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODc3MjQ2MDR9.JtTherWlJLmiKA0VbzwgSkHfxEZ3tcVomzSiCAhU9xc
+
+### Logout Example
+
+POST http://localhost:3000/logout
+
+######### LOGIN ADMIN
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "supremenoble",
+  "password": "abc123"
+}
+
+######## REGISTER USER
+POST http://localhost:3000/userRegister
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzgiLCJ1c2VybmFtZSI6IktpY2FwTWFzYW0iLCJwYXNzd29yZCI6Im1wcDk3IiwibmFtZSI6Ik11aGFtbWFkIEtoYWlydWwiLCJlbWFpbCI6ImIwMjIxMTAxNTNAc3R1ZGVudC51dGVtLmVkdS5teSIsInJvbGUiOiJyZXNpZGVudCIsImlhdCI6MTY4ODIxODAyMX0.0t89r8CM427_YiinSM3cgv9pHJvciRb9GP2VyABbBKA
+
+{
+  "username": "Kazuya99",
+  "password": "123456",
+  "name": "Shahrin Hakimi",
+  "email": "Kiwi@KetuaKelas.com",
+  "role": "resident",
+  "building": "A",
+  "apartment":  "99",
+  "phone":  "010-1234567"
+}
+
+
+### login User
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "KicapMasam",
+  "password": "mpp97"
+}
+
+###
+
+POST http://localhost:3000/visitorRegister
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzYiLCJ1c2VybmFtZSI6InN1cHJlbWVub2JsZSIsInBhc3N3b3JkIjoiYWJjMTIzIiwibmFtZSI6IlN5ZWQgQWhtYWQiLCJlbWFpbCI6ImJvYkBndWxhZ3VsYS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODgyMTY3ODB9.ZCWNUTDv-NzoV92AL68YJU1rwhAtNNvFnQ1YL0SEh_o
+
+{
+    "name"    : "Mark",
+    "contact" : "015-6789012",
+    "gender"  : "Male"
+}
+
+###
+
+PATCH http://localhost:3000/visitorUpdate
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzgiLCJ1c2VybmFtZSI6IktpY2FwTWFzYW0iLCJwYXNzd29yZCI6Im1wcDk3IiwibmFtZSI6Ik11aGFtbWFkIEtoYWlydWwiLCJlbWFpbCI6ImIwMjIxMTAxNTNAc3R1ZGVudC51dGVtLmVkdS5teSIsInJvbGUiOiJyZXNpZGVudCIsImlhdCI6MTY4ODIxNzMxN30.Br7ZCBlyiS6yIBP4rMM9CZLsgummYwBL2099rzoDa0w
+{
+    "contact": "015-6789012",
+    "newcontact": "016-7890123"
+}
+
+###
+
+DELETE http://localhost:3000/visitorDelete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzciLCJ1c2VybmFtZSI6Ik15dG8iLCJwYXNzd29yZCI6InNlbGlwYXJ0ZXJiYW5nIiwibmFtZSI6Ik11aGFtbWFkIEZhZHpsYW4iLCJlbWFpbCI6Im15dG9zdXBlckBnbWFpbC5jb20iLCJyb2xlIjoicmVzaWRlbnQiLCJpYXQiOjE2ODgyMDk3Njd9.k-4CzoL_0hyNEm57WVQdgJvFk5GG4iBexBtf6l1jxDk
+
+{
+    "accesspass": "6831988"
+}
+
+###
+
+DELETE http://localhost:3000/userDelete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzYiLCJ1c2VybmFtZSI6InN1cHJlbWVub2JsZSIsInBhc3N3b3JkIjoiYWJjMTIzIiwibmFtZSI6IlN5ZWQgQWhtYWQiLCJlbWFpbCI6ImJvYkBndWxhZ3VsYS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODgyMDk5MzJ9.DznGcVbO_npZ7LHFtLBFGQUTsIpdhMoRMi7JvWBdVHE
+
+{
+    "username": "Kazuya9"
+}
+
+###
+
+GET http://localhost:3000/visitors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzgiLCJ1c2VybmFtZSI6IktpY2FwTWFzYW0iLCJwYXNzd29yZCI6Im1wcDk3IiwibmFtZSI6Ik11aGFtbWFkIEtoYWlydWwiLCJlbWFpbCI6ImIwMjIxMTAxNTNAc3R1ZGVudC51dGVtLmVkdS5teSIsInJvbGUiOiJyZXNpZGVudCIsImlhdCI6MTY4ODIxNzI1OH0.bqtNLq3fjroOwtg1B3dHdiLIbM0Hl8SQUMCV4anKJyI
+
+###
+
+GET http://localhost:3000/visitorAccess
+Content-Type: application/json
+
+{
+    "contact": "015-6789010"
+}
+
+###
+
+PATCH http://localhost:3000/visitorCheckIn
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzgiLCJ1c2VybmFtZSI6IktpY2FwTWFzYW0iLCJwYXNzd29yZCI6Im1wcDk3IiwibmFtZSI6Ik11aGFtbWFkIEtoYWlydWwiLCJlbWFpbCI6ImIwMjIxMTAxNTNAc3R1ZGVudC51dGVtLmVkdS5teSIsInJvbGUiOiJyZXNpZGVudCIsImlhdCI6MTY4ODIxODAyMX0.0t89r8CM427_YiinSM3cgv9pHJvciRb9GP2VyABbBKA
+
+{
+    "accesspass": "92250932"
+}
+
+###
+
+PATCH http://localhost:3000/visitorCheckOut
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDk4OTFkYmQ1NzQ5OGE4MmVlMWRlYzYiLCJ1c2VybmFtZSI6InN1cHJlbWVub2JsZSIsInBhc3N3b3JkIjoiYWJjMTIzIiwibmFtZSI6IlN5ZWQgQWhtYWQiLCJlbWFpbCI6ImJvYkBndWxhZ3VsYS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODc3MjQ2MDR9.JtTherWlJLmiKA0VbzwgSkHfxEZ3tcVomzSiCAhU9xc
+
+{
+    "accesspass": "92250932"
+}
