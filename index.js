@@ -1,7 +1,7 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 const jwt = require('jsonwebtoken');
 const moment = require('moment-timezone');
 
@@ -40,7 +40,7 @@ client
 
 // Define database and collection names
 const db = client.db('apartmentvisitor');
-const userCollection = db.collection('users'); 
+const usersCollection = db.collection('users'); 
 const residentsCollection = db.collection('residents');
 const visitorsCollection = db.collection('visitors');
 
@@ -55,11 +55,11 @@ function login(username, password) {
         }
       }
 
-       Check in the dbUsers array for testing purposes
-       const testUser = dbUsers.find((dbUser) => dbUser.username === username && dbUser.password === password);
-       if (testUser) {
-         return testUser;
-       }
+      // Check in the dbUsers array for testing purposes
+      // const testUser = dbUsers.find((dbUser) => dbUser.username === username && dbUser.password === password);
+      // if (testUser) {
+      //   return testUser;
+      // }
 
       throw new Error('User not found');
     });
@@ -71,7 +71,7 @@ function register(username, password, name, email, role, building, apartment, ph
     .then((existingUser) => {
       if (existingUser) {
         console.log('Username or email already exists');
-        //throw new Error('Username or email already exists'); // Throw an error if username or email is already taken
+        throw new Error('Username or email already exists'); // Throw an error if username or email is already taken
       }
 
       const newUser = {
@@ -100,7 +100,7 @@ function register(username, password, name, email, role, building, apartment, ph
         })
         .catch((error) => {
           throw new Error('Error registering user');
-        );
+        });
     });
 }
 
@@ -428,4 +428,3 @@ app.patch('/visitorCheckOut', verifyToken, (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
