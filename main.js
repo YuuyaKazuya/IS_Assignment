@@ -14,8 +14,8 @@
  *               - username
  *               - password
  *               - name
- *               - phoneNumber
  *               - email
+ *               - role
  *             properties:
  *               username:
  *                 type: string
@@ -23,9 +23,9 @@
  *                 type: string
  *               name:
  *                 type: string
- *               phoneNumber:
- *                 type: string
  *               email:
+ *                 type: string
+ *               role:
  *                 type: string
  *     responses:
  *       201:
@@ -37,7 +37,7 @@
 // Host Register New Account/ create
 app.post('/registerhost', verifySecurity, async (req, res) => {
   const hosts = db.collection('hosts');
-  const { username, password, name, phoneNumber, email } = req.body;
+  const { username, password, name, email, role } = req.body;
 
   // Check if the username is already taken
   const existingHost = await hosts.findOne({ username });
@@ -46,7 +46,7 @@ app.post('/registerhost', verifySecurity, async (req, res) => {
   }
 
   // Insert the new host into the database
-  await hosts.insertOne({ username, password, name, phoneNumber, email });
+  await hosts.insertOne({ username, password, name, email, role });
 
   // Respond with a success message
   res.status(201).json({ message: 'Host registered successfully' });
