@@ -23,7 +23,7 @@ app.use('/sufi.Kimi-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB connection URL
 const uri =
-  'mongodb+srv://Shahrin:Kimi1999@cluster0.twulge0.mongodb.net/hotelBERR';
+  'mongodb+srv://Shahrin:Kimi1999@cluster0.twulge0.mongodb.net/apartmentvisitor';
 
 // Create a new MongoClient
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -40,9 +40,9 @@ client
 
 // Define database and collection names
 const db = client.db('hotelBERR');
-const adminuser = db.collection('hosts'); 
-const securityCollection = db.collection('security');
-const visitorregistration = db.collection('visitors');
+const userCollection = db.collection('users'); 
+const residentsCollection = db.collection('residents');
+const visitorsregistration = db.collection('visitors');
 
 function login(username, password) {
   return usersCollection.findOne({ username })
