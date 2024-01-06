@@ -11,7 +11,7 @@ const options = {
   definition:{
     openapi:'3.0.0',
     info:{
-      title: 'MyVMS API',
+      title: 'Assignment IS API',
       version:'1.0.0',
     },
   },
@@ -39,21 +39,156 @@ client
   });
 
 // Define database and collection names
-const db = client.db('apartmentvisitor');
-const usersCollection = db.collection('users'); 
-const residentsCollection = db.collection('residents');
-const visitorsCollection = db.collection('visitors');
+const db = client.db('hotelBERR');
+const adminuser = db.collection('hosts'); 
+const securityCollection = db.collection('security');
+const visitorregistration = db.collection('visitors');
 
-function login(username, password) {
-  return usersCollection.findOne({ username })
-    .then((user) => {
-      if (user) {
-        if (user.password === password) {
-          return user; // Successful login
-        } else {
-          throw new Error('Invalid password');
-        }
-      }
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(403).json({ error: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1]; // Expecting "Bearer TOKEN_STRING"
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    req.user = decoded;
+
+    // Check if the user has the required role (host or security)
+    if (req.user.role !== 'host' && req.user.role !== 'security') {
+      return res.status(403).json({ error: 'Insufficient permissions' });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: 'Failed to authenticate token' });
+  }
+};
+
+const verifySecurity = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(403).json({ error: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1]; // Expecting "Bearer TOKEN_STRING"
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    req.user = decoded;
+
+    // Check if the user has the required role (security)
+    if (req.user.role !== 'security') {
+      return res.status(403).json({ error: 'Insufficient permissions' });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: 'Failed to authenticate token' });
+  }
+};
+
+// Security personnel register host
+app.post('/registersecurityhost', verifySecurity, async (req, res) => {
+  const hosts = db.collection('hosts');
+  const { username, password } = req.body;
+
+  const existingHost = await hosts.findOne({ username });
+  if (existingHost) {
+    return res.status(400).json({ error: 'Host already exists' });
+  }
+
+  await hosts.insertOne({ username, password });
+  res.status(201).json({ message: 'Host registered successfully' });
+});
+
+
+app.use(bodyParser.json());
+
+// MongoDB connection setup
+
+const secret = 'your-secret-key'; // Store this securely
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+// Import necessary modules once at the top of your file
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+async function run() {
+  try {
+    // Connect the client to the server (optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("hotelBERR").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    // await client.close();
+  }
+}
+// Swagger setup and other code...
+
+run().catch(console.dir);
+
+// Connect to MongoDB and initialize collections
+client.connect()
+  .then(() => {
+    console.log('Connected to MongoDB');
+    db = client.db('your-database-name');
+  })
+  .catch(err => console.error('MongoDB connection error:', err));
+
+let db;
+let Visitorregistration;
+//let adminuser;
+let hostuser;
+let securityCollection; 
+
+
+// Connect to MongoDB and initialize collections
+client.connect()
+  .then(() => {
+    console.log('Connected to MongoDB');
+    db = client.db('hotelBERR');
+    
+
+  // Initialize collections after establishing the connection
+  Visitorregistration = db.collection('visitors');
+  adminuser = db.collection('hosts');
+  // Add this within the `run` function where you initialize collections
+  securityCollection = db.collection('security');
+
+
+
+  // Now you can safely start your server here, after the DB connection is established
+  app.listen(port, () => {
+    console.log(`Server is running on https://is-assignment.azurewebsites.net/sufi.Kimi-docs/#`);
+  });
+});
+
+
+// In-memory data storage (replace with a database in production)
+const visitors = [];
+//const admins = [];
+const host = [];
+const security = [];
+
+app.use(express.json());
+
+//function login(username, password) {
+  //return usersCollection.findOne({ username })
+    //.then((user) => {
+      //if (user) {
+        //if (user.password === password) {
+          //return user; // Successful login
+        //} else {
+          //throw new Error('Invalid password');
+        //}
+      //}
 
       // Check in the dbUsers array for testing purposes
       // const testUser = dbUsers.find((dbUser) => dbUser.username === username && dbUser.password === password);
@@ -61,50 +196,50 @@ function login(username, password) {
       //   return testUser;
       // }
 
-      throw new Error('User not found');
-    });
-}
+      //throw new Error('User not found');
+    //});
+//}
 
-function register(username, password, name, email, role, building, apartment, phone) {
-  return usersCollection
-    .findOne({ $or: [{ username }, { email }] }) // Check if username or email already exists
-    .then((existingUser) => {
-      if (existingUser) {
-        console.log('Username or email already exists');
-        throw new Error('Username or email already exists'); // Throw an error if username or email is already taken
-      }
+//function register(username, password, name, email, role, building, apartment, phone) {
+  //return usersCollection
+    //.findOne({ $or: [{ username }, { email }] }) // Check if username or email already exists
+    //.then((existingUser) => {
+      //if (existingUser) {
+        //console.log('Username or email already exists');
+        ///throw new Error('Username or email already exists'); // Throw an error if username or email is already taken
+      //}
 
-      const newUser = {
-        username,
-        password,
-        name,
-        email,
-        role,
-      };
+      //const newUser = {
+        //username,
+        //password,
+        //name,
+        //email,
+        //role,
+      //};
 
-      return usersCollection
-        .insertOne(newUser)
-        .then(() => {
-          if (role === 'resident') {
-            const residentData = {
-              name,
-              building,
-              apartment,
-              phone,
-            };
-            return residentsCollection.insertOne(residentData); // Add resident data to residentsCollection
-          }
-        })
-        .then(() => {
-          return 'User registered successfully';
-        })
-        .catch((error) => {
-          throw new Error('Error registering user');
-        });
-    });
-}
+      //return usersCollection
+        //.insertOne(newUser)
+        //.then(() => {
+          //if (role === 'resident') {
+            //const residentData = {
+              //name,
+              //building,
+              //apartment,
+              //phone,
+            //};
+            //return residentsCollection.insertOne(residentData); // Add resident data to residentsCollection
+         // }
+        //})
+        //.then(() => {
+          //return 'User registered successfully';
+        //})
+        //.catch((error) => {
+          //throw new Error('Error registering user');
+        //});
+    //});
+//}
 
-function generateToken(userData) {
+/*function generateToken(userData) {
   const token = jwt.sign(userData, 'ApartmentSuperPassword');
   return token;
 }
@@ -427,4 +562,5 @@ app.patch('/visitorCheckOut', verifyToken, (req, res) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-});
+});*/
+
