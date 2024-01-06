@@ -62,6 +62,42 @@ app.get('/login', (req, res) => {
   res.render('login'); // Assuming 'login.ejs' is in the 'views' folder
 });
 
+/**
+ * @swagger
+ * /host/login:
+ *   post:
+ *     summary: Host login
+ *     tags: [Host]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Host authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: Invalid username or password
+ */
+
 // Host login
 app.post('/host/login', async (req, res) => {
   const hosts = db.collection('hosts');
