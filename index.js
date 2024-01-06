@@ -23,7 +23,7 @@ app.use('/sufi.Kimi-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // MongoDB connection URL
 const uri =
-  'mongodb+srv://Shahrin:Kimi1999@cluster0.twulge0.mongodb.net/apartmentvisitor';
+  'mongodb+srv://Shahrin:Kimi1999@cluster0.twulge0.mongodb.net/hotelBERR';
 
 // Create a new MongoClient
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
