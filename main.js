@@ -62,6 +62,27 @@ app.get('/login', (req, res) => {
   res.render('login'); // Assuming 'login.ejs' is in the 'views' folder
 });
 
+// Host login
+app.post('/host/login', async (req, res) => {
+  const hosts = db.collection('hosts');
+  const { username, password } = req.body;
+
+  try {
+    const host = await hosts.findOne({ username, password });
+
+    if (!host) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    // Create token if the host was found
+    const token = jwt.sign({ userId: host._id, role: 'host' }, secret, { expiresIn: '1h' });
+
+    res.json({ message: 'Host authenticated successfully', accessToken: token });
+  } catch (error) {
+    console.error('Host authentication error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 /**
  * @swagger
