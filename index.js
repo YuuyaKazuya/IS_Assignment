@@ -39,10 +39,10 @@ client
   });
 
 // Define database and collection names
-const db = client.db('hotelBERR');
+const db = client.db('apartmentvisitor');
 const userCollection = db.collection('users'); 
 const residentsCollection = db.collection('residents');
-const visitorsregistration = db.collection('visitors');
+const visitorsCollection = db.collection('visitors');
 
 function login(username, password) {
   return usersCollection.findOne({ username })
